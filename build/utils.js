@@ -4,6 +4,58 @@ const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
 
+
+//S1 多页面配置依赖
+const glob = require('glob')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const PAGE_PATH = path.resolve(__dirname, '../src/pages')
+const merge = require('webpack-merge')
+
+
+//S2 多入口配置
+exports.entries = function() {
+  let entryFiles = glob.sync(PAGE_PATH + '/*/*.js')
+  let map = {}
+  entryFiles.forEach((filePath) => {
+    let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+    map[filename] = filePath
+  })
+  return map
+}
+
+
+//S3 多页面输出配置
+exports.htmlPlugin = function() {
+  let entryHtml = glob.sync(PAGE_PATH + '/*/*.html')
+  let arr = []
+  entryHtml.forEach((filePath) => {
+    let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+    let conf = {
+      template: filePath,               // 模板html文件
+      filename: filename + '.html',     // 打包生成的文件名
+      chunks: [filename],               // 添加块内容
+      inject: true                      // 保证assets下的资源文件引入
+    }
+    if (process.env.NODE_ENV === 'production') {
+      conf = merge(conf, {
+        chunks: ['manifest', 'vendor', filename],
+        minify: {                                     //压缩配置
+          removeComments: true,
+          collapseWhitespace: true,
+          removeAttributeQuotes: true
+        },
+        chunksSortMode: 'dependency'   // 插件会按模块的依赖关系依次加载，即：manifest，vendor，本页面入口，其他页面入口..
+      })
+    }
+    arr.push(new HtmlWebpackPlugin(conf))
+  })
+  return arr
+}
+
+
+
+// 默认内容
+
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
