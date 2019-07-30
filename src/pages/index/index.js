@@ -6,6 +6,7 @@ import Vue from 'vue'
 import axios from 'axios'
 
 // 引入组件
+import mySwipe from 'components/Swiper.vue'
 import foot from 'components/Foot'
 
 // 引入vant组件
@@ -15,7 +16,8 @@ Vue.use(List)
 let app = new Vue({   // eslint-disable-line no-unused-vars
   el: '#app',
   components: {
-    foot
+    foot,
+    mySwipe
   },
   data: {
     hotLists: null,
