@@ -4,7 +4,8 @@ let host = 'https://www.easy-mock.com/mock/5d2729c21752820de7a8a8f7/youzan'
 
 let url = {
   hotLists: '/index/hotLists',
-  indexBanner: '/index/banner'
+  indexBanner: '/index/banner',
+  topLists: '/category/topList'
 }
 
 for (let key in url) {
