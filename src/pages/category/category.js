@@ -16,8 +16,13 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
   },
   data: {
     topLists: null,
-    topIndex: 0 // 一级分类索引，默认0为综合排行
+    topIndex: 0, // 一级分类索引，默认0为综合排行
+
+    /* 二级分类数据 */
+    subData: null,
+    subRank: null
   },
+
   methods: {
     getTopLists () {
       axios.get(url.topLists).then(res => {
@@ -25,12 +30,33 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
         console.log(this.topLists)
       })
     },
-    getSubList (parentId, index) {
+    getSubList (index, parentId) {
       this.topIndex = index
+      if (index === 0) {
+        this.getRankData()
+      } else {
+        axios.post(url.subLists,{id: parentId}).then(res => {
+          this.subData = res.data.data
+          console.log('list', this.subData)
+        })
+      }
+     
+    },
+    
+    getRankData () {
+      axios.post(url.subRanks).then(res => {
+        this.subRank = res.data.data
+        console.log('rank', this.subRank)
+      })
     }
+
+
   },
+
+
 
   created () {
     this.getTopLists()
+    this.getSubList(0)
   }
 })
