@@ -15,13 +15,15 @@
         <li><a href="https://h5.youzan.com/v2/buyer/member"><i class="icon-user"></i>
           <div>我</div>
         </a></li>-->
-        <li class="active"
+        <li
           v-for="(item, index) of navConfig"
           :key="index"
+          :class="{active: curIndex == index}"
+          @click="changeNav(item, index)"
         >
-          <a href="index.html">
-            <i class="icon-home"></i>
-            <div>有赞</div>
+          <a :href="item.link">
+            <i :class="item.icon"></i>
+            <div>{{item.desc}}</div>
           </a>
         </li>
       </ul>
@@ -50,7 +52,15 @@ export default {
          link: 'member.html',
         icon: 'icon-user',
         desc: '我的'
-      }]
+      }],
+
+      curIndex: 0,
+    }
+  },
+
+  methods: {
+    changeNav(item, index) {
+      // this.curIndex = index
     }
   }
 
