@@ -7,7 +7,8 @@ let url = {
   indexBanner: '/index/banner',
   topLists: '/category/topList',
   subLists: '/category/subList',
-  subRanks: '/category/subRank'
+  subRanks: '/category/subRank',
+  searchLists: '/search/list',
 }
 
 for (let key in url) {
