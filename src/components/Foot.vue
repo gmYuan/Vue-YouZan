@@ -21,10 +21,11 @@
           :class="{active: curIndex == index}"
           @click="changeNav(item, index)"
         >
-          <a :href="item.link">
+          <a>
             <i :class="item.icon"></i>
-            <div>{{item.desc}}</div>
+            <div>{{item.desc}}</div>    
           </a>
+      
         </li>
       </ul>
     </div>
@@ -32,6 +33,10 @@
 </template>
 
 <script>
+
+import qs from 'qs'
+let {index} = qs.parse(location.search.substr(1))
+
 export default {
   name: "Foot",
   data () {
@@ -54,13 +59,13 @@ export default {
         desc: '我的'
       }],
 
-      curIndex: 0,
+      curIndex: parseInt(index) || 0,
     }
   },
 
   methods: {
     changeNav(item, index) {
-      // this.curIndex = index
+     location.href = `${item.link}?index=${index}`
     }
   }
 

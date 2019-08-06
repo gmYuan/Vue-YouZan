@@ -30,6 +30,14 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
         console.log(this.topLists)
       })
     },
+
+    getRankData () {
+      axios.post(url.subRanks).then(res => {
+        this.subRank = res.data.data
+        console.log('rank', this.subRank)
+      })
+    },
+
     getSubList (index, parentId) {
       this.topIndex = index
       if (index === 0) {
@@ -40,14 +48,10 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
           console.log('list', this.subData)
         })
       }
-     
     },
-    
-    getRankData () {
-      axios.post(url.subRanks).then(res => {
-        this.subRank = res.data.data
-        console.log('rank', this.subRank)
-      })
+
+    toSearch (item) {  // 跳转到列表页
+      location.href = `search.html?keyword=${item.name}&id=${item.id}`
     }
 
 

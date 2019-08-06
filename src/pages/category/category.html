@@ -207,6 +207,7 @@
               <li 
                 v-for="(item, index) of subData.hotBrand"
                 class="category-item js-category-item" :data-item-id="item.id" :data-item-name="item.name"
+                @click="toSearch(item)"
               >
                 <img :src="item.img" :alt="item.name" class="category-img">
                 <span class="category-item-name"> {{item.name}} </span>
@@ -219,6 +220,7 @@
               <li 
                 v-for="(item, index) of subData.hotList"
                 class="category-item js-category-item"  :data-item-id="item.id"  :data-item-name="item.name"
+                @click="toSearch(item)"
               >
                 <img :src="item.img" :alt="item.name" class="category-img">
                 <span class="category-item-name"> {{item.name}} </span>
