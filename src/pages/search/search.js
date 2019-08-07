@@ -6,6 +6,8 @@ import axios from 'axios'
 import api from 'js/api.js'
 import qs from 'qs'
 
+import mixin from 'js/mixin.js'
+
 let {keyword, id} = qs.parse(location.search.substr(1))
 
 let app = new Vue({ // eslint-disable-line no-unused-vars
@@ -27,5 +29,8 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
 
   created () {
     this.getSearchList()
-  }
+  },
+
+  mixins: [mixin]
+  
 })

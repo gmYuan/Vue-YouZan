@@ -5,15 +5,17 @@ import url from 'js/api.js'
 import axios from 'axios'
 import Vue from 'vue'
 
-import Foot from 'components/Foot.vue'
+// import Foot from 'components/Foot.vue'
+import mixin from 'js/mixin.js'
 
 Vue.config.devtools = true
 
 let app = new Vue({ // eslint-disable-line no-unused-vars
   el: '#app',
-  components: {
-    Foot
-  },
+  // components: {
+  //   Foot
+  // },
+
   data: {
     topLists: null,
     topIndex: 0, // 一级分类索引，默认0为综合排行
@@ -57,10 +59,12 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
 
   },
 
-
-
   created () {
     this.getTopLists()
     this.getSubList(0)
-  }
+  },
+
+  mixins: [mixin]
+
+
 })

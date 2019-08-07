@@ -64,7 +64,7 @@
               <div class="detail">
                 <div class="title">{{item.name}}</div>
                 <div class="meta relative">
-                  <span class="price">{{item.price}}</span>
+                  <span class="price">{{item.price | currency}}</span>
                   <span class="ship pull-right" v-if="item.isPostage">包邮</span>
                 </div>
               </div>
