@@ -22,20 +22,25 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
 
   data: {
     details: null,
+    tabList: ['商品详情', '本店成交'],
+    tabIndex: 0
   },
 
   methods: {
-    getDetail() {
-      axios.post(api.goodsDetail, {id}).then (res=> {
+    getDetail () {
+      axios.post(api.goodsDetail, {id}).then(res => {
         this.details = res.data.data
         console.log(this.details)
       })
+    },
+    changeTab (index) {
+      this.tabIndex = index
     }
   },
 
   mixins: [mixin],
 
-  created() {
+  created () {
     this.getDetail()
-  },
+  }
 })

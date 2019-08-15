@@ -133,13 +133,17 @@
           <div class="js-detail-container" style="margin-top: 10px;">
             <div class="js-tabber-container goods-detail">
               <div class="js-tabber tabber tabber-n2 clearfix orange">
-                <button data-type="goods" class="active">
-                  商品详情 </button>
-                <button data-type="sales">
-                  本店成交 </button>
+                <!-- tab切换list -->
+                <button  :class="{active: index === tabIndex}" v-for="(item, index) of tabList"
+                  @click="changeTab(index)"
+                >
+                  {{item}}
+                </button>
+              
               </div>
               <div class="js-tabber-content">
-                <div class="js-part hide" data-type="sales">
+                <!-- 本店成交 -->
+                <div class="js-part" data-type="sales" v-show="tabIndex == 1">
                   <div class="js-traderecord-list block-list-traderecord">
                     <div class="list-header">
                       <span class="col-1">买家</span>
@@ -147,57 +151,19 @@
                       <span class="col-3 center">数量</span>
                     </div>
                     <div class="js-list b-list block block-list">
+                      <div class="block-item">
+                        <span class="col-1 c-gray-darker">曾* </span>
+                        <span class="col-2 c-gray-dark center">8-15 14:11:22 </span>
+                        <span class="col-3 c-gray-darker center"> 1 </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="js-part js-goods-detail goods-tabber-c" data-type="goods" v-html="details.description">
-                  <!-- <div class="js-components-container components-container">
-                    <div class="custom-richtext js-lazy-container js-view-image-list">
-                      <p><img data-origin-width="720" data-origin-height="713"
-                          class="js-richtext-img-lazy js-view-image-item"
-                          src="https://img.yzcdn.cn/upload_files/2017/05/15/FhU7lMPonHtR8qP4zP4aIKRVkObr.jpg?imageView2/2/w/730/h/0/q/75/format/webp"
-                          data-src="https://img.yzcdn.cn/upload_files/2017/05/15/FhU7lMPonHtR8qP4zP4aIKRVkObr.jpg!730x0.jpg"><img
-                          data-origin-width="720" data-origin-height="494"
-                          class="js-richtext-img-lazy js-view-image-item"
-                          src="https://img.yzcdn.cn/upload_files/2017/05/15/FvYqk840X0ubXwFE6Nh0unihqIKm.jpg?imageView2/2/w/730/h/0/q/75/format/webp"
-                          data-src="https://img.yzcdn.cn/upload_files/2017/05/15/FvYqk840X0ubXwFE6Nh0unihqIKm.jpg!730x0.jpg"><img
-                          data-origin-width="720" data-origin-height="916"
-                          class="js-richtext-img-lazy js-view-image-item"
-                          src="https://img.yzcdn.cn/upload_files/2017/05/15/FvIfNYewmohf3b3V2yA_hr6whV-A.jpg?imageView2/2/w/730/h/0/q/75/format/webp"
-                          data-src="https://img.yzcdn.cn/upload_files/2017/05/15/FvIfNYewmohf3b3V2yA_hr6whV-A.jpg!730x0.jpg"><img
-                          data-origin-width="720" data-origin-height="656"
-                          class="js-richtext-img-lazy js-view-image-item"
-                          src="https://img.yzcdn.cn/upload_files/2017/05/15/FlYJPxbAgmkKjWtvLxwqjUMJHUG3.jpg?imageView2/2/w/730/h/0/q/75/format/webp"
-                          data-src="https://img.yzcdn.cn/upload_files/2017/05/15/FlYJPxbAgmkKjWtvLxwqjUMJHUG3.jpg!730x0.jpg"><img
-                          data-origin-width="720" data-origin-height="513"
-                          class="js-richtext-img-lazy js-view-image-item"
-                          src="https://img.yzcdn.cn/upload_files/2017/05/15/FmpaiyW8GbpV2I2QKwm7stoRQkOJ.jpg?imageView2/2/w/730/h/0/q/75/format/webp"
-                          data-src="https://img.yzcdn.cn/upload_files/2017/05/15/FmpaiyW8GbpV2I2QKwm7stoRQkOJ.jpg!730x0.jpg"><img
-                          data-origin-width="720" data-origin-height="691"
-                          class="js-richtext-img-lazy js-view-image-item"
-                          src="https://img.yzcdn.cn/upload_files/2017/05/15/Fs5rqsKzMe7qIHhuQAqyM1lcjmfB.jpg?imageView2/2/w/730/h/0/q/75/format/webp"
-                          data-src="https://img.yzcdn.cn/upload_files/2017/05/15/Fs5rqsKzMe7qIHhuQAqyM1lcjmfB.jpg!730x0.jpg"><img
-                          data-origin-width="720" data-origin-height="531"
-                          class="js-richtext-img-lazy js-view-image-item"
-                          src="https://img.yzcdn.cn/upload_files/2017/05/15/Foor6_Ipc-Lo9eOX_H_a8g4kWPRW.jpg?imageView2/2/w/730/h/0/q/75/format/webp"
-                          data-src="https://img.yzcdn.cn/upload_files/2017/05/15/Foor6_Ipc-Lo9eOX_H_a8g4kWPRW.jpg!730x0.jpg"><img
-                          data-origin-width="720" data-origin-height="932"
-                          class="js-richtext-img-lazy js-view-image-item"
-                          src="https://img.yzcdn.cn/upload_files/2017/05/15/FuuNBFbA_vMYmI6FFbNOemmDX9bd.jpg?imageView2/2/w/730/h/0/q/75/format/webp"
-                          data-src="https://img.yzcdn.cn/upload_files/2017/05/15/FuuNBFbA_vMYmI6FFbNOemmDX9bd.jpg!730x0.jpg"><img
-                          data-origin-width="720" data-origin-height="707"
-                          class="js-richtext-img-lazy js-view-image-item"
-                          src="https://img.yzcdn.cn/upload_files/2017/05/15/FotgIfOUlMtvhtH0dhRLlmpKJLv7.jpg?imageView2/2/w/730/h/0/q/75/format/webp"
-                          data-src="https://img.yzcdn.cn/upload_files/2017/05/15/FotgIfOUlMtvhtH0dhRLlmpKJLv7.jpg!730x0.jpg">
-                      </p>
-                    </div>
-                    <div class="price-intro">
-                      <h4>划线价格说明<i class="icon-arrow"></i></h4>
-                      <p>划线价格：划线的价格可能是商品的专柜价、吊牌价、正品零售价、指导价、曾经展示过的销售价等，仅供您参考。</p>
-                      <p>未划线价格：未划线的价格是商品的销售标价，具体的成交价格可能因会员使用优惠券、积分等发生变化，最终以订单结算价格为准。 </p>
-                      <p>*此说明仅当出现价格比较时有效。若这件商品针对划线价格进行了特殊说明，以特殊说明为准。</p>
-                    </div>
-                  </div> -->
+
+                <!-- 商品详情 -->
+                <div class="js-part js-goods-detail goods-tabber-c" data-type="goods" 
+                  v-html="details.description"  v-show="tabIndex == 0"
+                >
                 </div>
               </div>
             </div>
