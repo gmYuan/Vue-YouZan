@@ -9,6 +9,7 @@ let url = {
   subLists: '/category/subList',
   subRanks: '/category/subRank',
   searchLists: '/search/list',
+  goodsDetail: '/goods/details',
 }
 
 for (let key in url) {

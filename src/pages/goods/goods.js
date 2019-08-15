@@ -15,6 +15,27 @@ import qs from 'qs'
 import api from 'js/api.js'
 import mixin from 'js/mixin.js'
 
+let {id} = qs.parse(location.search.substr(1))
+
 let app = new Vue({ // eslint-disable-line no-unused-vars
-  el: '#app'
+  el: '#app',
+
+  data: {
+    details: null,
+  },
+
+  methods: {
+    getDetail() {
+      axios.post(api.goodsDetail, {id}).then (res=> {
+        this.details = res.data.data
+        console.log(this.details)
+      })
+    }
+  },
+
+  mixins: [mixin],
+
+  created() {
+    this.getDetail()
+  },
 })

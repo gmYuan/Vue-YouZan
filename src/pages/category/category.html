@@ -85,8 +85,8 @@
                 </div>
                 <ul v-if="subRank != null">
                   <li class="goods-item" v-for="(item, index) of subRank.hotGoods" :key="index">
-                    <a
-                      href="https://h5.youzan.com/v2/showcase/goods?alias=27cjv5wdsb4to&amp;source=yzapp&amp;f_platform=yzapp">
+                    <!-- <a href="https://h5.youzan.com/v2/showcase/goods?alias=27cjv5wdsb4to&amp;source=yzapp&amp;f_platform=yzapp"> -->
+                    <a :href="'goods.html?id=' + item.id">
                       <div class="thumb badge center-img">
                         <img
                           :src="item.img">
