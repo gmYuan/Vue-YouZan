@@ -22,6 +22,7 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
 
   data: {
     details: null,
+    dealLists: null,
     tabList: ['商品详情', '本店成交'],
     tabIndex: 0
   },
@@ -30,11 +31,20 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
     getDetail () {
       axios.post(api.goodsDetail, {id}).then(res => {
         this.details = res.data.data
-        console.log(this.details)
+        // console.log(this.details)
       })
     },
+    getDeal (id) {
+      axios.post(api.goodsDeal, {id}).then(res => {
+        this.dealLists = res.data.data.lists
+      })
+    },
+
     changeTab (index) {
       this.tabIndex = index
+      if (index) { // 只有点击切换时，才会去加载请求
+        this.getDeal({id})
+      }
     }
   },
 
