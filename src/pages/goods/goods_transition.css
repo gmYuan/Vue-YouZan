@@ -1,0 +1,7 @@
+.popup-enter-active, .popup-leave-active {
+  transition: all 300ms ease;
+  transform: translateY(0)
+}
+.popup-enter, .popup-leave-to  {
+  transform: translateY(100%)
+}
