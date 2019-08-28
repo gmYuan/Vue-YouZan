@@ -21,8 +21,9 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
 
   methods: {
     getCartList() {
-      axios.post(url.cartList).then(res => {
-        console.log(res)
+      axios.post(api.cartList).then(res => {
+        console.log('res', res)
+        this.cartLists = res.data.cartList
       })
     }
   },
@@ -31,6 +32,6 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
   mixins: [mixin],
 
   created () {
-   
+    this.getCartList()
   }
 })
