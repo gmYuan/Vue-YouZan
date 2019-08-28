@@ -15,9 +15,17 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
   el: '.container',
 
   computed: {},
-  data: {},
+  data: {
+    cartLists: null,
+  },
 
-  methods: {},
+  methods: {
+    getCartList() {
+      axios.post(url.cartList).then(res => {
+        console.log(res)
+      })
+    }
+  },
 
 
   mixins: [mixin],
