@@ -20,12 +20,25 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
   },
 
   methods: {
-    getCartList() {
+    getCartList() {  // 获取购物车列表页数据
       axios.post(api.cartList).then(res => {
-        console.log('res', res)
+        if (res.data.cartList && res.data.cartList.length > 0) {
+          res.data.cartList.forEach(shop => {
+            shop.isChecked = false
+            shop.goodsList.forEach(good => {
+              good.isChecked = false
+            })
+
+          })
+        }
         this.cartLists = res.data.cartList
       })
+    },
+   
+    changeCheck(item) {
+      item.isChecked = !item.isChecked
     }
+
   },
 
 
