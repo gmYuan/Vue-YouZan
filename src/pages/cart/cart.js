@@ -35,8 +35,11 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       })
     },
    
-    changeCheck(item) {
-      item.isChecked = !item.isChecked
+    changeCheck(shop, good) {           // 切换商品勾选状态 + 对应店铺状态
+      good.isChecked = !good.isChecked
+      shop.isChecked =  shop.goodsList.every(good => {
+        return good.isChecked == true
+      })
     }
 
   },

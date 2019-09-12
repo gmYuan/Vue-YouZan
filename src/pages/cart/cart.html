@@ -35,7 +35,7 @@
               <div class="header">
                  <!-- 切换 是否勾选店铺-->
                 <!-- <div class="select-group js-select-group"><span class="check checked"></span></div> -->
-                <div class="select-group js-select-group" @click="changeCheck(shop)">
+                <div class="select-group js-select-group">
                   <span class="check" :class="{checked: shop.isChecked}"> </span>
                 </div>
                 
@@ -54,7 +54,7 @@
                   >
                     <div>
                       <!-- 是否勾选商品-->
-                      <div class="check-container" @click="changeCheck(good)"> 
+                      <div class="check-container" @click="changeCheck(shop, good)"> 
                         <span class="check" :class="{checked: good.isChecked}">  </span>
                        </div>
 
