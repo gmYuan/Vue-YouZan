@@ -16,7 +16,7 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
 
   computed: {
     allSelected: {
-      get(){     // Q3 勾选所有店铺后，自动勾选全选按钮
+      get () { // Q3 勾选所有店铺后，自动勾选全选按钮
         if (this.cartLists && this.cartLists.length > 0) {
           return this.cartLists.every(shop => {
             return shop.isChecked
@@ -24,7 +24,7 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
         }
         return false
       },
-      set(newValue){   // Q5  勾选全选后，自动勾选店铺A按钮 和 店铺A下所有商品
+      set (newValue) { // Q5  勾选全选后，自动勾选店铺A按钮 和 店铺A下所有商品
         if (this.cartLists && this.cartLists.length > 0) {
           this.cartLists.forEach(shop => {
             shop.isChecked = newValue
@@ -34,12 +34,33 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
           })
         }
       }
+    },
+
+    getSelectedInfo () {
+      if (this.cartLists && this.cartLists.length > 0) {
+        let arr = []
+        let total = 0
+        this.cartLists.forEach(shop => {
+          shop.goodsList.forEach(good => {
+            if (good.isChecked) {
+              arr.push(good)
+              total += good.price * good.number
+            }
+          })
+        })
+             
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.totalPrice = total
+        return arr
+      }
+      return []
     }
 
   },
 
   data: {
     cartLists: null,
+    totalPrice: 0
   },
 
   methods: {
