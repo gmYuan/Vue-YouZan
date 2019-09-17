@@ -49,6 +49,7 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
   methods: {
     getDetail () {
       axios.post(api.goodsDetail, {id}).then(res => {
+        console.log('res', res)
         this.details = res.data.data
         // 赋值banner列表
         this.bannerList = []
