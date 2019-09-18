@@ -40,7 +40,11 @@
                 </div>
                 
                 <a class="shop-title"><i class="custom-store-img">店铺：</i>{{shop.shopTitle}}</a>
-                <a href="javascript:;" data-type="cart" class="j-edit-list pull-right c-blue font-size-12 edit-list"> 编辑 </a>
+                <a href="javascript:;" data-type="cart" class="j-edit-list pull-right c-blue font-size-12 edit-list"
+                   @click="editDelete(shop)"
+                > 
+                  {{shop.editingMsg}}
+                </a>
               </div>
 
               <div>
@@ -51,6 +55,7 @@
                   <li class="block-item block-item-cart"
                     v-for="(good, goodIndex) of shop.goodsList"
                     :key="goodIndex"
+                    :class="{editing: shop.isediting}"
                   >
                     <div>
                       <!-- 是否勾选商品-->
@@ -69,17 +74,19 @@
                             <h3 class="title js-ellipsis"><i>{{good.title}}</i></h3>
                           </a>
                           <p class="sku ellipsis"> {{good.sku}}</p>
+
                           <!-- 显示状态 商品数量 -->
-                          <div class="num">
-                            ×<span class="num-txt">{{good.number}}</span>
+                          <div class="num" v-show="!shop.isediting">
+                            ×
+                            <span class="num-txt">{{good.number}}</span>
                             <!---->
                           </div>
+
                           <!-- 编辑状态 商品数量 -->
-                          <div class="num" style="display: none;">
-                            <!---->
+                          <div class="num" v-show="shop.isediting">
                             <div class="quantity">
                               <button type="button" class="minus disabled"></button>
-                              <input type="text" pattern="[0-9]*" class="txt" value="1">
+                              <input type="text" pattern="[0-9]*" class="txt" v-model="good.number">
                               <button type="button" class="plus "></button>
                               <div class="response-area response-area-minus"></div>
                               <div class="response-area response-area-plus"></div>
@@ -159,12 +166,13 @@
 
 
               <!-- 显示状态 底部状态-->
-              <div class="total-price">
+              <div class="total-price" v-show="!editShop">
                 合计：¥ 
                 <span class="js-total-price" style="color: rgb(255, 102, 0);"> {{totalPrice | currency}} </span>
                 <p class="c-gray-dark">不含运费</p>
               </div>
               <button href="javascript:;" 
+                v-show="!editShop"
                 class="js-go-pay btn btn-orange-dark font-size-14" 
                 :disabled="!getSelectedInfo.length"
               > 
@@ -173,7 +181,7 @@
 
               <!-- 编辑状态 底部状态-->
               <button href="javascript:;" class="j-delete-goods btn font-size-14 btn-red"
-                style="display: none;"
+                v-show="editShop"
                 disabled="disabled" 
               >
                 删除

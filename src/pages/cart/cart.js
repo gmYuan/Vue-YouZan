@@ -36,7 +36,7 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       }
     },
 
-    getSelectedInfo () {
+    getSelectedInfo () {  // 所有选择结算的 数组
       if (this.cartLists && this.cartLists.length > 0) {
         let arr = []
         let total = 0
@@ -54,13 +54,19 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
         return arr
       }
       return []
+    },
+
+    removeSelectedList () {   // 所有选择删除的 数组
+
     }
+
 
   },
 
   data: {
     cartLists: null,
-    totalPrice: 0
+    totalPrice: 0,
+    editShop: null, 
   },
 
   methods: {
@@ -68,9 +74,15 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       axios.post(api.cartList).then(res => {
         if (res.data.cartList && res.data.cartList.length > 0) {
           res.data.cartList.forEach(shop => {
-            shop.isChecked = false
+            shop.isChecked = true
+            shop.isRemovedChecked = false
+
+            shop.isediting = false       // 新增 店铺切换编辑功能
+            shop.editingMsg = '编辑'
+
             shop.goodsList.forEach(good => {
-              good.isChecked = false
+              good.isChecked = true
+              good.isRemovedChecked = false
             })
 
           })
@@ -93,8 +105,24 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       })
     },
 
-    selectAll() {
+    selectAll() {   // 正常状态下全选
       this.allSelected = !this.allSelected
+    },
+
+
+    editDelete(shop) {    // 切换店铺 显示/编辑状态
+      console.log('shop', shop)
+      shop.isediting = !shop.isediting
+      shop.editingMsg = shop.isediting ? '完成' : '编辑'
+      this.cartLists.forEach(item => {
+        if (item.shopId != shop.shopId) {
+          item.isediting = false
+          item.editingMsg = shop.isediting ? '' : '编辑'
+        }
+      })
+
+      this.editShop = shop.isediting ? shop: null
+
     }
 
   },
