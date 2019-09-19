@@ -36,7 +36,29 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       }
     },
 
-    getSelectedInfo () {  // 所有选择结算的 数组
+    allRemovedSelected: {    // 删除状态下的 全选按钮
+      get() {
+        if (this.editShop) {
+          return this.editShop.isRemovedChecked
+        }
+        return false
+        
+      },
+
+      set(newValue) {
+        if (this.editShop) {
+          this.editShop.isRemovedChecked = newValue
+          this.editShop.goodsList.forEach(good => {
+            good.isRemovedChecked = newValue
+          })
+        }
+
+      }
+    },
+
+
+
+    getSelectedInfo () {  // 所有选择结算的 数组(含有 所有勾选结算的商品)
       if (this.cartLists && this.cartLists.length > 0) {
         let arr = []
         let total = 0
@@ -56,8 +78,17 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       return []
     },
 
-    removeSelectedList () {   // 所有选择删除的 数组
-
+    removeSelectedList () {   // 所有选择删除的 数组(含有 所有勾选删除的商品)
+      if (this.editShop) {
+        let arr = []
+        this.editShop.goodsList.forEach(good => {
+          if (good.isRemovedChecked) {
+            arr.push(good)
+          }
+        })
+        return arr
+      }
+      return []
     }
 
 
@@ -91,22 +122,28 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       })
     },
    
+
     selectGood(shop, good) {           //Q2 切换商品勾选状态 + 对应店铺状态
-      good.isChecked = !good.isChecked
-      shop.isChecked =  shop.goodsList.every(good => {
-        return good.isChecked == true
+
+      let checkedAttr = this.editShop ? 'isRemovedChecked' : 'isChecked'
+      good[checkedAttr] = !good[checkedAttr]
+      shop[checkedAttr] =  shop.goodsList.every(good => {
+        return good[checkedAttr] == true
       })
     },
 
     selectShop(shop) {  // Q4 切换店铺勾选状态 + 对应下商品状态
-      shop.isChecked = !shop.isChecked
+
+      let checkedAttr = this.editShop ? 'isRemovedChecked' : 'isChecked'
+      shop[checkedAttr] = !shop[checkedAttr]
       shop.goodsList.forEach(good => {
-        good.isChecked = shop.isChecked
+        good[checkedAttr] = shop[checkedAttr]
       })
     },
 
     selectAll() {   // 正常状态下全选
-      this.allSelected = !this.allSelected
+      let checkedAttr = this.editShop ? 'allRemovedSelected' : 'allSelected'
+      this[checkedAttr] = !this[checkedAttr]
     },
 
 

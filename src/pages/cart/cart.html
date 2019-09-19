@@ -36,7 +36,7 @@
                  <!-- 切换 是否勾选店铺-->
                 <!-- <div class="select-group js-select-group"><span class="check checked"></span></div> -->
                 <div class="select-group js-select-group">
-                  <span class="check" :class="{checked: shop.isChecked}" @click="selectShop(shop)"> </span>
+                  <span class="check" :class="{checked: editShop ? shop.isRemovedChecked : shop.isChecked}" @click="selectShop(shop)"> </span>
                 </div>
                 
                 <a class="shop-title"><i class="custom-store-img">店铺：</i>{{shop.shopTitle}}</a>
@@ -60,7 +60,7 @@
                     <div>
                       <!-- 是否勾选商品-->
                       <div class="check-container" @click="selectGood(shop, good)"> 
-                        <span class="check" :class="{checked: good.isChecked}">  </span>
+                        <span class="check" :class="{checked: editShop ? good.isRemovedChecked : good.isChecked}">  </span>
                        </div>
 
 
@@ -160,7 +160,7 @@
               <!-- 是否勾选全选 -->
               <!-- <div class="select-all"><span class="check checked"></span> 全选 </div> -->
               <div class="select-all" @click="selectAll">
-                <span class="check" :class="{checked: allSelected}"></span> 
+                <span class="check" :class="{checked: editShop ? allRemovedSelected : allSelected}"></span> 
                 全选
               </div>
 
@@ -182,7 +182,7 @@
               <!-- 编辑状态 底部状态-->
               <button href="javascript:;" class="j-delete-goods btn font-size-14 btn-red"
                 v-show="editShop"
-                disabled="disabled" 
+                :disabled="!removeSelectedList.length" 
               >
                 删除
               </button>
