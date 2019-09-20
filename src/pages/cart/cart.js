@@ -159,7 +159,25 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       })
 
       this.editShop = shop.isediting ? shop: null
+    },
 
+    EditGoodNum(type, good) {
+      switch (type) {   // type 1:增加商品数量    2:减少商品数量
+        case 1:
+          axios.post(api.addCart, {id: good.id, number: 1}).then(res => {
+            good.number ++
+          })
+          break
+
+        case 2:
+          if (good.number == 1) return
+          axios.post(api.minudCart, {id: good.id, number: 1}).then(res => {
+            good.number --
+          })
+          break
+          
+      
+      }
     }
 
   },

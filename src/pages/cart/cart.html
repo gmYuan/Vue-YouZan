@@ -85,11 +85,11 @@
                           <!-- 编辑状态 商品数量 -->
                           <div class="num" v-show="shop.isediting">
                             <div class="quantity">
-                              <button type="button" class="minus disabled"></button>
+                              <button type="button" class="minus" :class="{disabled: good.number == 1}"></button>
                               <input type="text" pattern="[0-9]*" class="txt" v-model="good.number">
                               <button type="button" class="plus "></button>
-                              <div class="response-area response-area-minus"></div>
-                              <div class="response-area response-area-plus"></div>
+                              <div class="response-area response-area-minus" @click="EditGoodNum(2,good)"></div>
+                              <div class="response-area response-area-plus" @click="EditGoodNum(1,good)"></div>
                             </div>
                           </div>
                           <div class="price c-orange">

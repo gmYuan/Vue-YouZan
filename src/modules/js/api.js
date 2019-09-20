@@ -17,8 +17,8 @@ let url = {
   goodsDetail: '/goods/details',
   goodsDeal: '/goods/deal',
   
-  addCart: '/cart/add',
   cartList: '/cart/list',   // 购物车列表
+  addCart: '/cart/add',
   updateCart: '/cart/update',  //修改购物车商品
   minudCart: '/cart/reduce',   // 减少商品
   removeCart: '/cart/remove',  // 删除商品
