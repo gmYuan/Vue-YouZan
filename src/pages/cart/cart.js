@@ -193,7 +193,38 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
         shop.isediting = false
         shop.editingMsg = '编辑'
       })
+    },
 
+    removeShopAllGoods () {  // 底部全选一行的 删除按钮: 删除商品(店铺) + 其他店铺状态变为显示状态
+      // console.log('x', this.removeSelectedList)
+      let ids = []
+      this.removeSelectedList.forEach(good => {
+        ids.push(good.id)
+      })
+      axios.post(api.mulRemoveCart, {ids}).then(res => {
+        let unDeleteGoods = []
+
+        this.editShop.goodsList.forEach(editGood => {  // 找出未勾选删除的商品保存，用于之后渲染
+          let index = this.removeSelectedList.findIndex(item => {
+            return item.id == editGood.id
+          })
+          if (index === -1) {
+            unDeleteGoods.push(editGood)
+          }
+        })
+
+        if (unDeleteGoods.length) {
+          this.editShop.goodsList = unDeleteGoods
+
+        } else { // 说明该店铺下的商品已全部被删除: 不显示店铺 + 状态恢复为显示状态
+          let shopIndex = this.cartLists.forEach((shop, i) => {
+            if (shop.shopId == this.editShop.shopId) {
+              return i
+            }
+          })
+          this.removeShop(shopIndex)
+        }
+      })
     }
 
   },

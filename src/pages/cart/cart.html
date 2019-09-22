@@ -185,6 +185,7 @@
               <button href="javascript:;" class="j-delete-goods btn font-size-14 btn-red"
                 v-show="editShop"
                 :disabled="!removeSelectedList.length" 
+                @click="removeShopAllGoods"
               >
                 删除
               </button>
