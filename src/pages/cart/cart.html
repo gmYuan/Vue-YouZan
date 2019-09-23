@@ -97,7 +97,9 @@
                         </div>
                         <div class="error-box"></div>
                       </div>
-                      <div class="delete-btn"><span>删除</span></div>
+                      <div class="delete-btn" @click="deleteGood(shop,good,shopIndex, goodIndex)">
+                        <span>删除</span>
+                      </div>
                     </div>
                   </li>
               
@@ -183,6 +185,7 @@
               <button href="javascript:;" class="j-delete-goods btn font-size-14 btn-red"
                 v-show="editShop"
                 :disabled="!removeSelectedList.length" 
+                @click="removeShopAllGoods"
               >
                 删除
               </button>

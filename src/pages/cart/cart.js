@@ -38,23 +38,21 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       }
     },
 
-    allRemovedSelected: {    // 删除状态下的 全选按钮
-      get() {
+    allRemovedSelected: { // 删除状态下的 全选按钮
+      get () {
         if (this.editShop) {
           return this.editShop.isRemovedChecked
         }
         return false
-        
       },
 
-      set(newValue) {
+      set (newValue) {
         if (this.editShop) {
           this.editShop.isRemovedChecked = newValue
           this.editShop.goodsList.forEach(good => {
             good.isRemovedChecked = newValue
           })
         }
-
       }
     },
 
@@ -99,11 +97,11 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
   data: {
     cartLists: null,
     totalPrice: 0,
-    editShop: null, 
+    editShop: null
   },
 
   methods: {
-    getCartList() {  // 获取购物车列表页数据
+    getCartList () {  // 获取购物车列表页数据
       axios.post(api.cartList).then(res => {
         if (res.data.cartList && res.data.cartList.length > 0) {
           res.data.cartList.forEach(shop => {
@@ -149,8 +147,8 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
     },
 
 
-    editDelete(shop) {    // 切换店铺 显示/编辑状态
-      console.log('shop', shop)
+    editDelete (shop) { // 切换店铺 显示/编辑状态
+      // console.log('shop', shop)
       shop.isediting = !shop.isediting
       shop.editingMsg = shop.isediting ? '完成' : '编辑'
       this.cartLists.forEach(item => {
@@ -163,7 +161,7 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
       this.editShop = shop.isediting ? shop: null
     },
 
-    EditGoodNum(type, good) {
+    EditGoodNum (type, good) {
       switch (type) {   // type 1:增加商品数量    2:减少商品数量
         case 1:
           // axios.post(api.addCart, {id: good.id, number: 1}).then(res => {
@@ -177,12 +175,61 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
         case 2:
           if (good.number == 1) return
           axios.post(api.minudCart, {id: good.id, number: 1}).then(res => {
-            good.number --
+            good.number--
           })
           break
-          
-      
       }
+    },
+
+    deleteGood (shop, good, shopIndex, goodIndex) {
+      axios.post(api.removeCart, {id: good.id}).then(res => {
+        shop.goodsList.splice(goodIndex, 1)
+      
+        if (!shop.goodsList.length) { // 删除到店铺下无商品时: 不显示店铺 + 状态恢复为显示状态
+          this.removeShop(shopIndex)
+        }
+      })
+    },
+ 
+    removeShop (shopIndex) {  // 删除店铺 + 恢复为显示状态 + 每个店铺和状态变为显示状态
+      this.cartLists.splice(shopIndex, 1)
+      this.editShop = null
+      this.cartLists.forEach(shop => {
+        shop.isediting = false
+        shop.editingMsg = '编辑'
+      })
+    },
+
+    removeShopAllGoods () {  // 底部全选一行的 删除按钮: 删除商品(店铺) + 其他店铺状态变为显示状态
+      // console.log('x', this.removeSelectedList)
+      let ids = []
+      this.removeSelectedList.forEach(good => {
+        ids.push(good.id)
+      })
+      axios.post(api.mulRemoveCart, {ids}).then(res => {
+        let unDeleteGoods = []
+
+        this.editShop.goodsList.forEach(editGood => {  // 找出未勾选删除的商品保存，用于之后渲染
+          let index = this.removeSelectedList.findIndex(item => {
+            return item.id == editGood.id
+          })
+          if (index === -1) {
+            unDeleteGoods.push(editGood)
+          }
+        })
+
+        if (unDeleteGoods.length) {
+          this.editShop.goodsList = unDeleteGoods
+
+        } else { // 说明该店铺下的商品已全部被删除: 不显示店铺 + 状态恢复为显示状态
+          let shopIndex = this.cartLists.forEach((shop, i) => {
+            if (shop.shopId == this.editShop.shopId) {
+              return i
+            }
+          })
+          this.removeShop(shopIndex)
+        }
+      })
     }
 
   },
