@@ -10,6 +10,8 @@ import mixin from 'js/mixin.js'
 import axios from 'axios'
 import api from 'js/api.js'
 
+import Cart from 'js/cartService.js'
+
 
 let app = new Vue({ // eslint-disable-line no-unused-vars
   el: '.container',
@@ -164,7 +166,10 @@ let app = new Vue({ // eslint-disable-line no-unused-vars
     EditGoodNum(type, good) {
       switch (type) {   // type 1:增加商品数量    2:减少商品数量
         case 1:
-          axios.post(api.addCart, {id: good.id, number: 1}).then(res => {
+          // axios.post(api.addCart, {id: good.id, number: 1}).then(res => {
+          //   good.number ++
+          // })
+          Cart.add(good.id).then(res => {
             good.number ++
           })
           break
