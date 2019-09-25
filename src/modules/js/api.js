@@ -24,6 +24,17 @@ let url = {
   removeCart: '/cart/remove',  // 删除商品
   mulRemoveCart: '/cart/mulremove',  //批量删除商品
 
+
+  /* 个人地址相关  */
+  addressList: '/address/list',   // 地址列表
+
+  addAddress: '/address/add',
+  removeAddress: '/address/remove', 
+  updateAddress: 'address/update',  
+
+  setDefaultAddress: 'address/setDefault'  // 设置为默认地址
+  
+
   
 }
 
