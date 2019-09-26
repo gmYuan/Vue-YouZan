@@ -29,8 +29,15 @@
               </option>
             </select>
 
-            <select class="js-city-selector">
+            <select class="js-city-selector" v-model="cityValue">
               <option value="-1">选择城市</option>
+               <option 
+                v-for="(cityItem, i) of cityMap"
+                :key="i"
+                :value="cityItem.value"
+              >
+              {{cityItem.label}}
+              </option>
             </select>
 
             <select class="js-county-selector" name="area_code" data-code>
@@ -103,7 +110,7 @@ export default {
     provinceValue(newVal) {
       if (newVal == -1) return
 
-      this.cityMap = this.addressMap.find((item) => {
+      this.cityMap = this.addressMap.find(item => {
         return item.value == newVal
       }).children
     }
