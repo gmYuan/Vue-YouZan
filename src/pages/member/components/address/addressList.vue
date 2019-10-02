@@ -28,9 +28,9 @@ import Address from 'js/addressService.js'
 
 export default {
 
-  data () {
-    return {
-      addressLists: []
+  computed: {
+    addressLists () {
+      return this.$store.state.addressLists
     }
   },
 
@@ -41,19 +41,21 @@ export default {
       this.$router.push({ path: 'addressEdit', query: {addressInfo} })
     },
 
-    getAddressList () {
-      Address.addressList().then(res => {
-        // console.log(res)
-        this.addressLists = res.data.lists
-      })
-    }
+    // getAddressList () {
+    //   Address.addressList().then(res => {
+    //     // console.log(res)
+    //     this.addressLists = res.data.lists
+    //   })
+    // }
 
 
   },
 
   created() {
-    this.getAddressList()
-
+    // this.getAddressList()
+    if (!this.addressLists) {
+      this.$store.dispatch('getAddressLists')
+    }
   }
 }
 
@@ -61,3 +63,4 @@ export default {
 
 <style>
 </style>
+

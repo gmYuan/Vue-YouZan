@@ -100,6 +100,12 @@ export default {
     };
   },
 
+  computed: {
+     addressLists () {
+      return this.$store.state.addressLists
+    }
+  },
+
   methods: {
     getAddressInfo() {
       // 判断跳转类型 + 当是编辑地址时，存入带入的数据
@@ -122,9 +128,11 @@ export default {
       let { name, tel, provinceValue, cityValue, districtValue, address } = this
       let data = { name, tel, provinceValue, cityValue, districtValue, address }
       if (this.type === "add") {
-        Address.addAddress(data).then(res => {
-          this.$router.go(-1);
-        })
+        // Address.addAddress(data).then(res => {
+        //   this.$router.go(-1);
+        // })
+        this.$store.dispatch('addAddressAction', data)
+
       } else if (this.type === "edit") {
         data.id = this.id
         Address.updateAddress(data).then(res => {
@@ -179,6 +187,10 @@ export default {
         let info = this.$route.query.addressInfo;
         this.districtValue = parseInt(info.districtValue);
       }
+    },
+
+    addressLists() {
+      this.$router.go(-1)
     }
   },
 

@@ -6,11 +6,11 @@ Vue.use(Router)
 // S2 配置路由属性
 const routes = [{
     path: '/',
-    component: ()=> import('@/pages/member/components/member.vue')
+    component: ()=> import('../components/member.vue')
   },
   {
     path: '/address',
-    component: ()=> import('@/pages/member/components/address/address.vue'),
+    component: ()=> import('../components/address/address.vue'),
     children: [
       {
         path: '',
@@ -20,12 +20,12 @@ const routes = [{
       {
         path: 'addressLists',
         name: 'addressLists',
-        component: ()=> import('@/pages/member/components/address/addressList.vue'),
+        component: ()=> import('../components/address/addressList.vue'),
       },
       {
         path: 'addressEdit',
         name: 'addressEdit',
-        component: ()=> import('@/pages/member/components/address/addressEdit.vue'),
+        component: ()=> import('../components/address/addressEdit.vue'),
       }
     ]
 
